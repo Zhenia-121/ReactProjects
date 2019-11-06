@@ -1,8 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ToDoListHeader from './Components/todo-list-header';
+import SearchTask from './Components/searchtask';
+import ToDoList from './Components/todo-list';
 
-const el = <h1>Hello world</h1>;
+const App = () => {
+    return (
+        <div>
+        <ToDoListHeader />
+        <SearchTask />
+        <ToDoList />
+    </div>)
+}
 
-ReactDOM.render(el, document.getElementById('root')); 
+ReactDOM.render(<App />, document.getElementById('root')); 
 
 

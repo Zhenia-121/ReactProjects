@@ -1,8 +1,11 @@
 import React from 'react';
 
-const ToDoListItem = () => {
+const ToDoListItem = ({label, important }) => {
+    const itemStyle = {
+        color: important ? 'tomato' : 'black'
+    };
     return (
-        <span>To learn English</span>
+        <span style={itemStyle}> { label }</span>
     );
 };
 

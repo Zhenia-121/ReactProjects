@@ -1,14 +1,19 @@
 import React from 'react';
-import ToDoListHeader from './todo-list-header';
-import SearchTask from './searchtask';
-import ToDoList from './todo-list';
+import ToDoListHeader from './ToDoListHeader';
+import SearchTask from './SearchPanel';
+import ToDoList from './ToDoList';
 
 const App = () => {
+    const todoList = [
+        { id: 1, label: "Learn English", important: true },
+        { id: 2, label: "Learn Coding", important: true },
+        { id: 3, label: "Do nothing", important: false }
+    ]
     return (
         <div>
         <ToDoListHeader />
         <SearchTask />
-        <ToDoList />
+        <ToDoList items = { todoList } />
     </div>)
 }
 

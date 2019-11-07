@@ -1,8 +1,9 @@
 import React from 'react';
 
-const ToDoListHeader = () => {
+
+const ToDoListHeader = ({ header }) => {
     return (
-        <h1>To Do:</h1>
+        <h1>{ header }</h1>
     );
 };
 

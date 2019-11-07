@@ -11,11 +11,15 @@ export default class AddItemForm extends Component  {
             value: label
         })
     };
-    saveItem = () => {
+    addItem = () => {
         this.props.onAdded(this.state.value);
         this.cleanInput();
-
     }
+    inputSaveHandler = (e) => {
+        if (e.key === 'Enter') {
+            this.addItem();
+        }
+    };
     cleanInput = () => {
         this.setState({
             value: ''
@@ -25,8 +29,8 @@ export default class AddItemForm extends Component  {
     render () {
         return (
             <div>
-                <input name="label" value={this.state.value} onChange={this.handleChange} />
-                <button onClick = {() => { this.saveItem() }} >Add item</button>
+                <input name="label" value={this.state.value} onKeyPress={ this.inputSaveHandler} onChange={this.handleChange} />
+                <button onClick = {() => { this.addItem() }} >Add item</button>
             </div>
         )
     }

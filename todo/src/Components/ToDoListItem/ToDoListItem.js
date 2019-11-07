@@ -31,7 +31,7 @@ export default class ToDoListItem extends Component {
                     onClick={ this.onLabelClick }> 
                     { label }
                 </span>
-                <button onClick={ this.props.onDeleted}> 
+                <button className={ "delete-item" } onClick={ this.props.onDeleted}> 
                     Delete
                 </button> 
             </div>

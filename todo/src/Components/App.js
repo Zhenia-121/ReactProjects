@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ToDoListHeader from './ToDoListHeader';
-import ToDoList from './ToDoList';
+import ToDoList from './ToDoList/ToDoList';
 import AddItemForm from './AddItemForm';
 
 export default class App extends Component {
@@ -13,37 +13,42 @@ export default class App extends Component {
     };
 
     deleteItem = (id) => {
-            this.setState(( {items} ) => {
-                const idx = items.findIndex((el) => el.id === id);
-                const newArray = [...items.slice(0, idx), ...items.slice(idx + 1)];
-                return { 
-                    items: newArray
-                }
-            });
-            console.log( ...this.state.items);
-            console.log(`${id} element is deleted`);
-        };
+        this.setState(({ items }) => {
+            const idx = items.findIndex((el) => el.id === id);
+            const newArray = [...items.slice(0, idx), ...items.slice(idx + 1)];
+            return {
+                items: newArray
+            }
+        });
+    };
 
     addItem = (label) => {
-        this.setState(({items}) => {
-            let newId = items.reduce((a, b) => (a.id > b.id ? a.id : b.id)) + 1;
-            console.log(`new item Id ${newId}`);
-            const newItem = { id: newId, label: label};
+        this.setState(({ items }) => {
+            let newId = 0;
+            if (items.length > 0) {
+                newId = items.reduce((a, b) => (a.id > b.id ? a.id : b.id)) + 1;
+            }
+            const newItem = { id: newId, label: label };
             return {
                 items: [...items, newItem]
             }
         });
-        console.log( ...this.state.items);
-    }    
+    }
 
-        render() {
-            const { items } =  this.state;
-            return (
-                <div>
-                    <ToDoListHeader header={"To do:"} />
-                    <ToDoList items={ items } onDeleted={ this.deleteItem } />
-                    <AddItemForm onAdded={ this.addItem }/>
-                </div>
-            );
-        };
+    cleanAll = () => {
+        this.setState({
+            items: []
+        });
+    }
+
+    render() {
+        const { items } = this.state;
+        return (
+            <div>
+                <ToDoListHeader header={"To do:"} />
+                <ToDoList items={ items } onDeleted={ this.deleteItem } onCleanAll={ this.cleanAll }/>
+                <AddItemForm onAdded={this.addItem} />
+            </div>
+        );
+    };
 };

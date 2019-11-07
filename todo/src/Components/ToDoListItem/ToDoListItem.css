@@ -2,6 +2,6 @@
     text-decoration: line-through;
 }
 
-button {
+button.delete-item {
     margin-left: 20px;
 }

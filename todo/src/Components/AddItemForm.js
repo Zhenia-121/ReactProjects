@@ -12,15 +12,25 @@ export default class AddItemForm extends Component  {
         })
     };
     addItem = () => {
-        this.props.onAdded(this.state.value);
-        this.cleanInput();
-    }
+        const enteredValue = this.state.value;
+        if (this.isEmptyValue(enteredValue))
+            return;
+        this.props.onAdded(enteredValue);
+    };
     inputSaveHandler = (e) => {
         if (e.key === 'Enter') {
             this.addItem();
+            this.clearInput();
         }
     };
-    cleanInput = () => {
+    buttonSaveHandler = () => {
+        this.addItem();
+        this.clearInput();
+    };
+    isEmptyValue = (value) => {
+        return value === '';
+    };
+    clearInput = () => {
         this.setState({
             value: ''
         });
@@ -30,7 +40,7 @@ export default class AddItemForm extends Component  {
         return (
             <div>
                 <input name="label" value={this.state.value} onKeyPress={ this.inputSaveHandler} onChange={this.handleChange} />
-                <button onClick = {() => { this.addItem() }} >Add item</button>
+                <button onClick = { this.buttonSaveHandler } >Add item</button>
             </div>
         )
     }

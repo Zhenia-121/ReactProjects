@@ -6,9 +6,9 @@ import AddItemForm from './AddItemForm';
 export default class App extends Component {
     state = {
         items: [
-            { id: 0, label: 'Learn English' },
-            { id: 1, label: 'Learn Coding' },
-            { id: 2, label: 'Do nothing' }
+            { id: 0, label: 'Learn English', done: false },
+            { id: 1, label: 'Learn Coding', done: false },
+            { id: 2, label: 'Do nothing', done: false }
         ]
     };
 
@@ -26,15 +26,26 @@ export default class App extends Component {
         this.setState(({ items }) => {
             let newId = 0;
             if (items.length > 0) {
-                newId = items.reduce((a, b) => (a.id > b.id ? a.id : b.id)) + 1;
+                newId = items.reduce((max, value) => Math.max(max, value.id), 1) + 1;
             }
-            const newItem = { id: newId, label: label };
+            const newItem = { id: newId, label: label, done: false };
             return {
                 items: [...items, newItem]
             }
         });
-    }
+    };
 
+    changeTaskStatus = (id) => {
+        this.setState(({ items}) => {
+            const idx = items.findIndex((item) => item.id === id);
+            const itemWithOldState = items[idx];
+            const itemWithNewState = { ...itemWithOldState, done: !itemWithOldState.done };
+            const newArray = [...items.slice(0, idx), itemWithNewState, ...items.slice(idx + 1)];
+            return {
+                items: newArray
+            };    
+        })
+    };
     cleanAll = () => {
         this.setState({
             items: []
@@ -46,7 +57,7 @@ export default class App extends Component {
         return (
             <div>
                 <ToDoListHeader header={"To do:"} />
-                <ToDoList items={ items } onDeleted={ this.deleteItem } onCleanAll={ this.cleanAll }/>
+                <ToDoList items={ items } onDeleted={ this.deleteItem } onLabelClicked={ this.changeTaskStatus } onCleanAll={ this.cleanAll }/>
                 <AddItemForm onAdded={this.addItem} />
             </div>
         );

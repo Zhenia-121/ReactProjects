@@ -3,21 +3,8 @@ import './ToDoListItem.css';
 
 export default class ToDoListItem extends Component {
     
-    state = {
-        done: true
-    }
-    
-    onLabelClick = () => {
-        this.setState(({done}) => {
-            return {
-                done: !done
-            };
-        });
-    };
-
     render() {
-        const { label } =  this.props;
-        const { done } = this.state; 
+        const { label, done } =  this.props;
 
         let classNames = 'todo-list-item';
         if (done) {
@@ -28,10 +15,10 @@ export default class ToDoListItem extends Component {
             <div>
                 <span 
                     className = { classNames }
-                    onClick={ this.onLabelClick }> 
+                    onClick={ this.props.onLabelClick }> 
                     { label }
                 </span>
-                <button className={ "delete-item" } onClick={ this.props.onDeleted}> 
+                <button className={ "delete-item" } onClick={ this.props.onDeleted }> 
                     Delete
                 </button> 
             </div>
